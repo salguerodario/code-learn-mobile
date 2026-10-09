@@ -1,70 +1,104 @@
-export const learningPaths = [
-  {
-    id: 'javascript',
-    title: 'JavaScript Essentials',
-    description: 'Learn variables, functions, arrays, objects, and DOM basics.',
-    level: 'Absolute beginner',
-    lessonsTotal: 9,
-    progress: 32,
-  },
-  {
-    id: 'python',
-    title: 'Python Foundations',
-    description: 'Start with syntax, logic, loops, and problem solving.',
-    level: 'Absolute beginner',
-    lessonsTotal: 8,
-    progress: 18,
-  },
-];
+import express from 'express';
+import cors from 'cors';
+import {
+  learningPaths,
+  lessons,
+  starterChallenges,
+  quizBank,
+  userProgress,
+  defaultUser,
+} from './data.js';
 
-export const lessons = [
-  {
-    id: 'js-1',
-    language: 'JavaScript',
-    title: 'Variables and values',
-    difficulty: 'Beginner',
-    durationMinutes: 10,
-    summary: 'Understand numbers, strings, booleans, and how to store data.',
-  },
-  {
-    id: 'js-2',
-    language: 'JavaScript',
-    title: 'Functions',
-    difficulty: 'Beginner',
-    durationMinutes: 12,
-    summary: 'Learn how to write reusable blocks of code.',
-  },
-  {
-    id: 'py-1',
-    language: 'Python',
-    title: 'Printing and variables',
-    difficulty: 'Beginner',
-    durationMinutes: 9,
-    summary: 'Print values and store them in variables.',
-  },
-  {
-    id: 'py-2',
-    language: 'Python',
-    title: 'If statements',
-    difficulty: 'Beginner',
-    durationMinutes: 11,
-    summary: 'Make decisions in your code using conditions.',
-  },
-];
+const app = express();
+const PORT = process.env.PORT || 4000;
 
-export const starterChallenges = [
-  {
-    id: 'challenge-1',
-    title: 'Create a greeting function',
-    language: 'JavaScript',
-    difficulty: 'Easy',
-    prompt: 'Write a function that returns a greeting using a name passed as an argument.',
-  },
-  {
-    id: 'challenge-2',
-    title: 'Check a user age',
-    language: 'Python',
-    difficulty: 'Easy',
-    prompt: 'Write a function that tells the user if they are old enough to access a service.',
-  },
-];
+app.use(cors());
+app.use(express.json());
+
+app.get('/api/health', (_req, res) => {
+  res.json({ status: 'ok', message: 'Code Learn API is running' });
+});
+
+app.post('/api/auth/signup', (req, res) => {
+  const { name, email, password } = req.body || {};
+
+  if (!name || !email || !password) {
+    return res.status(400).json({ message: 'Name, email and password are required.' });
+  }
+
+  return res.status(201).json({
+    user: {
+      id: 'u-101',
+      name,
+      email,
+      streak: 7,
+      level: 'Beginner',
+    },
+    token: 'demo-token-123',
+  });
+});
+
+app.post('/api/auth/login', (req, res) => {
+  const { email, password } = req.body || {};
+
+  if (!email || !password) {
+    return res.status(400).json({ message: 'Email and password are required.' });
+  }
+
+  return res.json({
+    user: defaultUser,
+    token: 'demo-token-456',
+  });
+});
+
+app.get('/api/learning-paths', (_req, res) => {
+  res.json(learningPaths);
+});
+
+app.get('/api/lessons', (_req, res) => {
+  res.json(lessons);
+});
+
+app.get('/api/lessons/:language', (req, res) => {
+  const { language } = req.params;
+  const normalized = language.toLowerCase();
+  const filtered = lessons.filter((lesson) => lesson.language.toLowerCase() === normalized);
+
+  if (!filtered.length) {
+    return res.status(404).json({ message: 'No lessons found for that language.' });
+  }
+
+  return res.json(filtered);
+});
+
+app.get('/api/lessons/:lessonId/detail', (req, res) => {
+  const lesson = lessons.find((item) => item.id === req.params.lessonId);
+
+  if (!lesson) {
+    return res.status(404).json({ message: 'Lesson not found.' });
+  }
+
+  return res.json(lesson);
+});
+
+app.get('/api/challenges', (_req, res) => {
+  res.json(starterChallenges);
+});
+
+app.get('/api/quiz/:lessonId', (req, res) => {
+  const questions = quizBank.filter((item) => item.lessonId === req.params.lessonId);
+
+  if (!questions.length) {
+    return res.status(404).json({ message: 'No quiz available for this lesson.' });
+  }
+
+  return res.json(questions);
+});
+
+app.get('/api/progress', (_req, res) => {
+  res.json(userProgress);
+});
+
+app.listen(PORT, () => {
+  console.log(`API listening on http://localhost:${PORT}`);
+});

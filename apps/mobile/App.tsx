@@ -1,246 +1,187 @@
-import React from 'react';
-import { StatusBar } from 'expo-status-bar';
-import {
-  SafeAreaView,
-  ScrollView,
-  StyleSheet,
-  Text,
-  View,
-  Pressable,
-} from 'react-native';
+export const defaultUser = {
+  id: 'u-100',
+  name: 'Alex',
+  email: 'alex@example.com',
+  streak: 7,
+  level: 'Beginner',
+  xp: 260,
+};
 
-const learningPaths = [
+export const learningPaths = [
   {
     id: 'javascript',
     title: 'JavaScript Essentials',
+    description: 'Learn variables, functions, arrays, objects, conditionals, and loops.',
+    language: 'JavaScript',
     level: 'Absolute beginner',
-    lessons: 9,
-    progress: 32,
+    lessonsTotal: 6,
+    progress: 46,
     accent: '#F7C948',
   },
   {
     id: 'python',
     title: 'Python Foundations',
+    description: 'Start with syntax, data types, logic, loops, and your first mini programs.',
+    language: 'Python',
     level: 'Absolute beginner',
-    lessons: 8,
-    progress: 18,
+    lessonsTotal: 6,
+    progress: 33,
     accent: '#4F8EF7',
   },
 ];
 
-const quickActions = [
-  { id: 'lesson', label: 'Continue lesson' },
-  { id: 'quiz', label: 'Daily quiz' },
-  { id: 'practice', label: 'Practice coding' },
+export const lessons = [
+  {
+    id: 'js-1',
+    language: 'JavaScript',
+    title: 'Variables and values',
+    difficulty: 'Beginner',
+    durationMinutes: 12,
+    summary: 'Understand strings, numbers, booleans, and how variables store values.',
+    objective: 'You will be able to declare variables and use them in basic expressions.',
+    steps: [
+      'Learn what variables are and how they store data.',
+      'Understand the difference between strings, numbers, and booleans.',
+      'Practice reading and updating values in code.',
+    ],
+    example: 'const name = "Alex";\nlet score = 10;\nconsole.log(name, score);',
+  },
+  {
+    id: 'js-2',
+    language: 'JavaScript',
+    title: 'Functions',
+    difficulty: 'Beginner',
+    durationMinutes: 15,
+    summary: 'Learn to write reusable blocks of code that accept inputs and return values.',
+    objective: 'You will create functions and call them with arguments.',
+    steps: [
+      'Understand what a function is.',
+      'Learn how to pass parameters into a function.',
+      'Return data from a function to reuse it elsewhere.',
+    ],
+    example: 'function greet(name) {\n  return "Hello, " + name;\n}\n\nconsole.log(greet("Alex"));',
+  },
+  {
+    id: 'js-3',
+    language: 'JavaScript',
+    title: 'Conditionals',
+    difficulty: 'Beginner',
+    durationMinutes: 14,
+    summary: 'Use if/else statements to make decisions in your code.',
+    objective: 'You will check conditions and respond differently depending on the result.',
+    steps: [
+      'Learn the if statement.',
+      'Explore else and else if logic.',
+      'Write code that reacts to data.',
+    ],
+    example: 'const age = 18;\nif (age >= 18) {\n  console.log("Adult");\n} else {\n  console.log("Minor");\n}',
+  },
+  {
+    id: 'py-1',
+    language: 'Python',
+    title: 'Printing and variables',
+    difficulty: 'Beginner',
+    durationMinutes: 10,
+    summary: 'Print text and store values in variables using Python syntax.',
+    objective: 'You will be able to print output and save information in a variable.',
+    steps: [
+      'Learn the print function.',
+      'Create variables with names and values.',
+      'Understand the role of assignment in Python.',
+    ],
+    example: 'name = "Alex"\nprint("Hello, " + name)',
+  },
+  {
+    id: 'py-2',
+    language: 'Python',
+    title: 'If statements',
+    difficulty: 'Beginner',
+    durationMinutes: 13,
+    summary: 'Use conditionals to control the flow of your program.',
+    objective: 'You will create simple decision-making logic in Python.',
+    steps: [
+      'Learn how to compare values.',
+      'Use if, elif, and else.',
+      'Respond to different inputs in your code.',
+    ],
+    example: 'age = 18\nif age >= 18:\n    print("Adult")\nelse:\n    print("Minor")',
+  },
+  {
+    id: 'py-3',
+    language: 'Python',
+    title: 'Loops',
+    difficulty: 'Beginner',
+    durationMinutes: 18,
+    summary: 'Repeat actions without writing the same lines multiple times.',
+    objective: 'You will use loops to repeat tasks and iterate through data.',
+    steps: [
+      'Learn the for loop.',
+      'Learn the while loop and when to use it.',
+      'Use loops to process lists or runs repeatedly.',
+    ],
+    example: 'for i in range(3):\n    print(i)',
+  },
 ];
 
-export default function App() {
-  return (
-    <SafeAreaView style={styles.safeArea}>
-      <StatusBar style="light" />
-      <ScrollView contentContainerStyle={styles.container}>
-        <View style={styles.headerRow}>
-          <View>
-            <Text style={styles.eyebrow}>Welcome back</Text>
-            <Text style={styles.title}>Code Learn</Text>
-          </View>
-          <View style={styles.avatar}>
-            <Text style={styles.avatarText}>CL</Text>
-          </View>
-        </View>
+export const starterChallenges = [
+  {
+    id: 'challenge-1',
+    title: 'Create a greeting function',
+    language: 'JavaScript',
+    difficulty: 'Easy',
+    prompt: 'Write a function that returns a greeting using a name passed as an argument.',
+  },
+  {
+    id: 'challenge-2',
+    title: 'Check a user age',
+    language: 'Python',
+    difficulty: 'Easy',
+    prompt: 'Write a function that tells the user if they are old enough to access a service.',
+  },
+  {
+    id: 'challenge-3',
+    title: 'Loop over a list',
+    language: 'Python',
+    difficulty: 'Easy',
+    prompt: 'Print each item in a list using a loop.',
+  },
+];
 
-        <View style={styles.streakCard}>
-          <Text style={styles.streakLabel}>Current streak</Text>
-          <Text style={styles.streakValue}>7 days</Text>
-          <Text style={styles.streakText}>Keep going — you are building strong habits.</Text>
-        </View>
+export const quizBank = [
+  {
+    id: 'q-js-1',
+    lessonId: 'js-1',
+    question: 'Which keyword is used to declare a variable that should not be reassigned?',
+    options: ['var', 'let', 'const', 'function'],
+    answer: 'const',
+  },
+  {
+    id: 'q-js-2',
+    lessonId: 'js-2',
+    question: 'What does a function return?',
+    options: ['Only numbers', 'Only strings', 'A value when used with return', 'Nothing at all'],
+    answer: 'A value when used with return',
+  },
+  {
+    id: 'q-py-1',
+    lessonId: 'py-1',
+    question: 'Which function prints text to the console in Python?',
+    options: ['echo()', 'print()', 'output()', 'log()'],
+    answer: 'print()',
+  },
+  {
+    id: 'q-py-2',
+    lessonId: 'py-2',
+    question: 'What is the purpose of an if statement?',
+    options: ['To repeat code', 'To make a decision', 'To store data', 'To import modules'],
+    answer: 'To make a decision',
+  },
+];
 
-        <Text style={styles.sectionTitle}>Quick actions</Text>
-        <View style={styles.actionRow}>
-          {quickActions.map((action) => (
-            <Pressable key={action.id} style={styles.actionButton}>
-              <Text style={styles.actionText}>{action.label}</Text>
-            </Pressable>
-          ))}
-        </View>
-
-        <Text style={styles.sectionTitle}>Learning paths</Text>
-        {learningPaths.map((path) => (
-          <View key={path.id} style={[styles.pathCard, { borderColor: path.accent }]}>
-            <View style={styles.pathHeaderRow}>
-              <View>
-                <Text style={styles.pathTitle}>{path.title}</Text>
-                <Text style={styles.pathMeta}>{path.level}</Text>
-              </View>
-              <View style={[styles.badge, { backgroundColor: path.accent }]}>
-                <Text style={styles.badgeText}>{path.lessons} lessons</Text>
-              </View>
-            </View>
-
-            <View style={styles.progressWrap}>
-              <View style={[styles.progressFill, { width: `${path.progress}%`, backgroundColor: path.accent }]} />
-            </View>
-
-            <View style={styles.footerRow}>
-              <Text style={styles.progressText}>{path.progress}% complete</Text>
-              <Pressable style={[styles.continueButton, { backgroundColor: path.accent }]}>
-                <Text style={styles.continueButtonText}>Continue</Text>
-              </Pressable>
-            </View>
-          </View>
-        ))}
-      </ScrollView>
-    </SafeAreaView>
-  );
-}
-
-const styles = StyleSheet.create({
-  safeArea: {
-    flex: 1,
-    backgroundColor: '#0f172a',
-  },
-  container: {
-    padding: 20,
-    paddingBottom: 40,
-  },
-  headerRow: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    marginBottom: 20,
-  },
-  eyebrow: {
-    color: '#94a3b8',
-    fontSize: 14,
-    marginBottom: 4,
-  },
-  title: {
-    color: '#f8fafc',
-    fontSize: 34,
-    fontWeight: '700',
-  },
-  avatar: {
-    width: 52,
-    height: 52,
-    borderRadius: 26,
-    backgroundColor: '#f97316',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  avatarText: {
-    color: '#fff',
-    fontWeight: '700',
-  },
-  streakCard: {
-    backgroundColor: '#111827',
-    borderRadius: 18,
-    padding: 18,
-    borderWidth: 1,
-    borderColor: '#334155',
-    marginBottom: 20,
-  },
-  streakLabel: {
-    color: '#cbd5e1',
-    fontSize: 12,
-    marginBottom: 6,
-  },
-  streakValue: {
-    color: '#f8fafc',
-    fontSize: 30,
-    fontWeight: '700',
-    marginBottom: 6,
-  },
-  streakText: {
-    color: '#94a3b8',
-    fontSize: 14,
-  },
-  sectionTitle: {
-    color: '#f8fafc',
-    fontSize: 20,
-    fontWeight: '600',
-    marginBottom: 12,
-    marginTop: 10,
-  },
-  actionRow: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    gap: 12,
-    marginBottom: 24,
-  },
-  actionButton: {
-    flex: 1,
-    backgroundColor: '#1e293b',
-    borderRadius: 12,
-    paddingVertical: 14,
-    paddingHorizontal: 10,
-    borderWidth: 1,
-    borderColor: '#334155',
-  },
-  actionText: {
-    color: '#f8fafc',
-    textAlign: 'center',
-    fontWeight: '600',
-  },
-  pathCard: {
-    backgroundColor: '#111827',
-    borderRadius: 18,
-    borderWidth: 1,
-    padding: 16,
-    marginBottom: 18,
-  },
-  pathHeaderRow: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    marginBottom: 12,
-  },
-  pathTitle: {
-    color: '#f8fafc',
-    fontSize: 18,
-    fontWeight: '600',
-  },
-  pathMeta: {
-    color: '#94a3b8',
-    fontSize: 12,
-    marginTop: 4,
-  },
-  badge: {
-    borderRadius: 999,
-    paddingHorizontal: 10,
-    paddingVertical: 6,
-  },
-  badgeText: {
-    color: '#0f172a',
-    fontSize: 11,
-    fontWeight: '700',
-  },
-  progressWrap: {
-    height: 10,
-    backgroundColor: '#1e293b',
-    borderRadius: 999,
-    overflow: 'hidden',
-    marginBottom: 12,
-  },
-  progressFill: {
-    height: '100%',
-    borderRadius: 999,
-  },
-  footerRow: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-  },
-  progressText: {
-    color: '#cbd5e1',
-    fontSize: 13,
-  },
-  continueButton: {
-    borderRadius: 10,
-    paddingVertical: 10,
-    paddingHorizontal: 16,
-  },
-  continueButtonText: {
-    color: '#0f172a',
-    fontWeight: '700',
-  },
-});
+export const userProgress = {
+  totalLessonsCompleted: 2,
+  streak: 7,
+  xp: 260,
+  nextGoal: 'Finish the JavaScript basics path',
+  completedLessonIds: ['js-1', 'py-1'],
+};
