@@ -10,6 +10,20 @@ import {
   Alert,
 } from 'react-native';
 
+const COLORS = {
+  bg: '#0a0e27',
+  bgSecondary: '#15172e',
+  bgTertiary: '#1f2340',
+  border: '#2d2f4a',
+  text: '#f0f2f5',
+  textSecondary: '#a0a3b8',
+  primary: '#9d4edd',
+  primaryLight: '#c77dff',
+  accent: '#7209b7',
+  success: '#10b981',
+  warning: '#f59e0b',
+};
+
 const learningPaths = [
   {
     id: 'javascript',
@@ -17,7 +31,7 @@ const learningPaths = [
     level: 'Absolute beginner',
     lessons: 6,
     progress: 46,
-    accent: '#F7C948',
+    accent: COLORS.primaryLight,
   },
   {
     id: 'python',
@@ -25,7 +39,7 @@ const learningPaths = [
     level: 'Absolute beginner',
     lessons: 6,
     progress: 33,
-    accent: '#4F8EF7',
+    accent: COLORS.primary,
   },
 ];
 
@@ -148,7 +162,6 @@ export default function App() {
       Alert.alert('Missing information', 'Please enter your email and password.');
       return;
     }
-
     setScreen('home');
   };
 
@@ -173,8 +186,8 @@ export default function App() {
     const code = practiceCode.toLowerCase();
     const valid =
       code.includes('function') || code.includes('def')
-      ? (code.includes('return') && (code.includes('hello') || code.includes('name') || code.includes('age') || code.includes('18')))
-      : false;
+        ? code.includes('return') && (code.includes('hello') || code.includes('name') || code.includes('age') || code.includes('18'))
+        : false;
 
     if (valid) {
       Alert.alert('Challenge passed!', 'Great work — your function follows the right pattern.');
@@ -187,35 +200,42 @@ export default function App() {
 
   const renderAuthScreen = () => (
     <View style={styles.authContainer}>
-      <Text style={styles.appName}>Code Learn</Text>
-      <Text style={styles.subtitle}>Learn JavaScript and Python from absolute zero.</Text>
+      <View style={styles.authHeader}>
+        <Text style={styles.appName}>Code Learn</Text>
+        <Text style={styles.subtitle}>Master JavaScript and Python</Text>
+      </View>
 
-      <TextInput
-        style={styles.input}
-        placeholder="Your name"
-        value={userName}
-        onChangeText={setUserName}
-      />
-      <TextInput
-        style={styles.input}
-        placeholder="Email"
-        keyboardType="email-address"
-        value={email}
-        onChangeText={setEmail}
-      />
-      <TextInput
-        style={styles.input}
-        placeholder="Password"
-        secureTextEntry
-        value={password}
-        onChangeText={setPassword}
-      />
+      <View style={styles.authForm}>
+        <TextInput
+          style={styles.input}
+          placeholder="Your name"
+          placeholderTextColor={COLORS.textSecondary}
+          value={userName}
+          onChangeText={setUserName}
+        />
+        <TextInput
+          style={styles.input}
+          placeholder="Email"
+          placeholderTextColor={COLORS.textSecondary}
+          keyboardType="email-address"
+          value={email}
+          onChangeText={setEmail}
+        />
+        <TextInput
+          style={styles.input}
+          placeholder="Password"
+          placeholderTextColor={COLORS.textSecondary}
+          secureTextEntry
+          value={password}
+          onChangeText={setPassword}
+        />
 
-      <Pressable style={styles.primaryButton} onPress={handleLogin}>
-        <Text style={styles.primaryButtonText}>Get started</Text>
-      </Pressable>
+        <Pressable style={styles.primaryButton} onPress={handleLogin}>
+          <Text style={styles.primaryButtonText}>Get started</Text>
+        </Pressable>
 
-      <Text style={styles.smallText}>Already have an account? Log in</Text>
+        <Text style={styles.smallText}>Already have an account? Log in</Text>
+      </View>
     </View>
   );
 
@@ -232,7 +252,7 @@ export default function App() {
       </View>
 
       <View style={styles.streakCard}>
-        <Text style={styles.streakLabel}>Current streak</Text>
+        <Text style={styles.streakLabel}>🔥 Current streak</Text>
         <Text style={styles.streakValue}>7 days</Text>
         <Text style={styles.streakText}>You are building a strong learning habit.</Text>
       </View>
@@ -240,26 +260,29 @@ export default function App() {
       <Text style={styles.sectionTitle}>Quick actions</Text>
       <View style={styles.actionRow}>
         <Pressable style={styles.actionButton} onPress={() => setScreen('lessons')}>
+          <Text style={styles.actionEmoji}>📚</Text>
           <Text style={styles.actionText}>Lessons</Text>
         </Pressable>
         <Pressable style={styles.actionButton} onPress={() => setScreen('quiz')}>
+          <Text style={styles.actionEmoji}>❓</Text>
           <Text style={styles.actionText}>Quiz</Text>
         </Pressable>
         <Pressable style={styles.actionButton} onPress={() => setScreen('practice')}>
-          <Text style={styles.actionText}>Practice</Text>
+          <Text style={styles.actionEmoji}>💻</Text>
+          <Text style={styles.actionText}>Code</Text>
         </Pressable>
       </View>
 
       <Text style={styles.sectionTitle}>Learning paths</Text>
       {learningPaths.map((path) => (
-        <View key={path.id} style={[styles.pathCard, { borderColor: path.accent }]}>
+        <View key={path.id} style={[styles.pathCard, { borderLeftColor: path.accent, borderLeftWidth: 4 }]}>
           <View style={styles.pathHeaderRow}>
-            <View>
+            <View style={styles.pathInfo}>
               <Text style={styles.pathTitle}>{path.title}</Text>
               <Text style={styles.pathMeta}>{path.level}</Text>
             </View>
             <View style={[styles.badge, { backgroundColor: path.accent }]}>
-              <Text style={styles.badgeText}>{path.lessons} lessons</Text>
+              <Text style={styles.badgeText}>{path.lessons}</Text>
             </View>
           </View>
 
@@ -282,7 +305,7 @@ export default function App() {
     <ScrollView contentContainerStyle={styles.container}>
       <View style={styles.topBar}>
         <Pressable onPress={() => setScreen('home')}>
-          <Text style={styles.linkText}>Back</Text>
+          <Text style={styles.linkText}>← Back</Text>
         </Pressable>
         <Text style={styles.sectionTitle}>Lessons</Text>
       </View>
@@ -301,7 +324,7 @@ export default function App() {
           <Text style={styles.lessonSummary}>{lesson.summary}</Text>
           <View style={styles.lessonMetaRow}>
             <Text style={styles.lessonMeta}>{lesson.difficulty}</Text>
-            <Text style={styles.lessonMeta}>{lesson.duration}</Text>
+            <Text style={styles.lessonMeta}>⏱ {lesson.duration}</Text>
           </View>
         </Pressable>
       ))}
@@ -312,7 +335,7 @@ export default function App() {
     <ScrollView contentContainerStyle={styles.container}>
       <View style={styles.topBar}>
         <Pressable onPress={() => setScreen('lessons')}>
-          <Text style={styles.linkText}>Back</Text>
+          <Text style={styles.linkText}>← Back</Text>
         </Pressable>
       </View>
 
@@ -326,7 +349,7 @@ export default function App() {
 
         <Text style={styles.detailHeading}>What you will learn</Text>
         {['Learn the concept', 'Practice syntax', 'Apply it to a small challenge'].map((item) => (
-          <Text key={item} style={styles.bullet}>• {item}</Text>
+          <Text key={item} style={styles.bullet}>✓ {item}</Text>
         ))}
 
         <Text style={styles.detailHeading}>Example</Text>
@@ -334,7 +357,7 @@ export default function App() {
       </View>
 
       <Pressable style={styles.primaryButton} onPress={() => setScreen('quiz')}>
-        <Text style={styles.primaryButtonText}>Take quiz</Text>
+        <Text style={styles.primaryButtonText}>Take quiz →</Text>
       </Pressable>
     </ScrollView>
   );
@@ -343,12 +366,12 @@ export default function App() {
     <ScrollView contentContainerStyle={styles.container}>
       <View style={styles.topBar}>
         <Pressable onPress={() => setScreen('lesson')}>
-          <Text style={styles.linkText}>Back</Text>
+          <Text style={styles.linkText}>← Back</Text>
         </Pressable>
       </View>
 
       <View style={styles.quizCard}>
-        <Text style={styles.lessonLabel}>{selectedLesson.language}</Text>
+        <Text style={styles.lessonLabel}>{selectedLesson.language} Quiz</Text>
         <Text style={styles.lessonDetailTitle}>{currentQuiz.question}</Text>
 
         {currentQuiz.options.map((option) => (
@@ -372,25 +395,27 @@ export default function App() {
     <ScrollView contentContainerStyle={styles.container}>
       <View style={styles.topBar}>
         <Pressable onPress={() => setScreen('home')}>
-          <Text style={styles.linkText}>Back</Text>
+          <Text style={styles.linkText}>← Back</Text>
         </Pressable>
       </View>
 
       <View style={styles.practiceCard}>
-        <Text style={styles.lessonLabel}>{selectedPractice.language}</Text>
+        <Text style={styles.lessonLabel}>{selectedPractice.language} Lab</Text>
         <Text style={styles.lessonDetailTitle}>{selectedPractice.title}</Text>
         <Text style={styles.detailText}>{selectedPractice.prompt}</Text>
 
+        <Text style={styles.codeEditorLabel}>Your code:</Text>
         <TextInput
           style={styles.codeEditor}
           multiline
           value={practiceCode}
           onChangeText={setPracticeCode}
           textAlignVertical="top"
+          placeholderTextColor={COLORS.textSecondary}
         />
 
         <Pressable style={styles.primaryButton} onPress={handlePracticeRun}>
-          <Text style={styles.primaryButtonText}>Run code</Text>
+          <Text style={styles.primaryButtonText}>▶ Run code</Text>
         </Pressable>
       </View>
     </ScrollView>
@@ -400,15 +425,27 @@ export default function App() {
     <ScrollView contentContainerStyle={styles.container}>
       <View style={styles.topBar}>
         <Pressable onPress={() => setScreen('home')}>
-          <Text style={styles.linkText}>Back</Text>
+          <Text style={styles.linkText}>← Back</Text>
         </Pressable>
       </View>
 
       <View style={styles.profileCard}>
         <Text style={styles.profileName}>{userName}</Text>
         <Text style={styles.profileEmail}>{email}</Text>
-        <Text style={styles.profileStat}>Streak: 7 days</Text>
-        <Text style={styles.profileStat}>XP: {score || 260}</Text>
+        <View style={styles.statsGrid}>
+          <View style={styles.statBox}>
+            <Text style={styles.statLabel}>Streak</Text>
+            <Text style={styles.statValue}>7 🔥</Text>
+          </View>
+          <View style={styles.statBox}>
+            <Text style={styles.statLabel}>XP</Text>
+            <Text style={styles.statValue}>{score || 260}</Text>
+          </View>
+          <View style={styles.statBox}>
+            <Text style={styles.statLabel}>Level</Text>
+            <Text style={styles.statValue}>1</Text>
+          </View>
+        </View>
       </View>
     </ScrollView>
   );
@@ -429,41 +466,48 @@ export default function App() {
 const styles = StyleSheet.create({
   safeArea: {
     flex: 1,
-    backgroundColor: '#0f172a',
+    backgroundColor: COLORS.bg,
   },
   container: {
-    padding: 20,
+    padding: 16,
     paddingBottom: 40,
   },
   authContainer: {
     flex: 1,
-    justifyContent: 'center',
-    padding: 24,
-    backgroundColor: '#0f172a',
+    backgroundColor: COLORS.bg,
+  },
+  authHeader: {
+    paddingTop: 60,
+    paddingHorizontal: 20,
+    marginBottom: 40,
+  },
+  authForm: {
+    paddingHorizontal: 20,
   },
   appName: {
-    color: '#f8fafc',
-    fontSize: 36,
-    fontWeight: '700',
+    color: COLORS.text,
+    fontSize: 42,
+    fontWeight: '800',
     marginBottom: 8,
   },
   subtitle: {
-    color: '#94a3b8',
+    color: COLORS.textSecondary,
     fontSize: 16,
     marginBottom: 24,
   },
   input: {
-    backgroundColor: '#111827',
-    borderColor: '#334155',
+    backgroundColor: COLORS.bgSecondary,
+    borderColor: COLORS.border,
     borderWidth: 1,
     borderRadius: 12,
     paddingHorizontal: 14,
     paddingVertical: 12,
-    color: '#f8fafc',
+    color: COLORS.text,
     marginBottom: 14,
+    fontSize: 15,
   },
   primaryButton: {
-    backgroundColor: '#f59e0b',
+    backgroundColor: COLORS.primary,
     borderRadius: 12,
     paddingVertical: 14,
     alignItems: 'center',
@@ -471,128 +515,141 @@ const styles = StyleSheet.create({
     marginBottom: 18,
   },
   primaryButtonText: {
-    color: '#0f172a',
+    color: COLORS.text,
     fontWeight: '700',
     fontSize: 16,
   },
   smallText: {
-    color: '#cbd5e1',
+    color: COLORS.textSecondary,
     textAlign: 'center',
+    fontSize: 14,
   },
   headerRow: {
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-    marginBottom: 20,
+    marginBottom: 24,
   },
   eyebrow: {
-    color: '#94a3b8',
+    color: COLORS.textSecondary,
     fontSize: 14,
     marginBottom: 4,
   },
   title: {
-    color: '#f8fafc',
+    color: COLORS.text,
     fontSize: 32,
-    fontWeight: '700',
+    fontWeight: '800',
   },
   avatar: {
     width: 52,
     height: 52,
     borderRadius: 26,
-    backgroundColor: '#f97316',
+    backgroundColor: COLORS.primary,
     alignItems: 'center',
     justifyContent: 'center',
   },
   avatarText: {
-    color: '#fff',
+    color: COLORS.text,
     fontWeight: '700',
+    fontSize: 18,
   },
   streakCard: {
-    backgroundColor: '#111827',
+    backgroundColor: COLORS.bgSecondary,
     borderRadius: 18,
     padding: 18,
     borderWidth: 1,
-    borderColor: '#334155',
-    marginBottom: 20,
+    borderColor: COLORS.border,
+    marginBottom: 24,
   },
   streakLabel: {
-    color: '#cbd5e1',
+    color: COLORS.primaryLight,
     fontSize: 12,
-    marginBottom: 5,
+    marginBottom: 6,
+    fontWeight: '700',
   },
   streakValue: {
-    color: '#f8fafc',
-    fontSize: 30,
-    fontWeight: '700',
-    marginBottom: 6,
+    color: COLORS.text,
+    fontSize: 36,
+    fontWeight: '800',
+    marginBottom: 8,
   },
   streakText: {
-    color: '#94a3b8',
+    color: COLORS.textSecondary,
     fontSize: 14,
   },
   sectionTitle: {
-    color: '#f8fafc',
-    fontSize: 20,
-    fontWeight: '600',
+    color: COLORS.text,
+    fontSize: 18,
+    fontWeight: '700',
     marginBottom: 12,
-    marginTop: 10,
+    marginTop: 8,
   },
   actionRow: {
     flexDirection: 'row',
     justifyContent: 'space-between',
     marginBottom: 24,
+    gap: 8,
   },
   actionButton: {
     flex: 1,
-    backgroundColor: '#1e293b',
-    borderRadius: 12,
-    paddingVertical: 14,
+    backgroundColor: COLORS.bgSecondary,
+    borderRadius: 14,
+    paddingVertical: 16,
     paddingHorizontal: 8,
     borderWidth: 1,
-    borderColor: '#334155',
-    marginRight: 8,
+    borderColor: COLORS.border,
+    alignItems: 'center',
+  },
+  actionEmoji: {
+    fontSize: 24,
+    marginBottom: 6,
   },
   actionText: {
-    color: '#f8fafc',
+    color: COLORS.text,
     textAlign: 'center',
     fontWeight: '600',
+    fontSize: 12,
   },
   pathCard: {
-    backgroundColor: '#111827',
-    borderRadius: 18,
+    backgroundColor: COLORS.bgSecondary,
+    borderRadius: 16,
     borderWidth: 1,
+    borderColor: COLORS.border,
     padding: 16,
-    marginBottom: 18,
+    marginBottom: 14,
+  },
+  pathInfo: {
+    flex: 1,
   },
   pathHeaderRow: {
     flexDirection: 'row',
     justifyContent: 'space-between',
-    alignItems: 'center',
+    alignItems: 'flex-start',
     marginBottom: 12,
   },
   pathTitle: {
-    color: '#f8fafc',
-    fontSize: 18,
-    fontWeight: '600',
+    color: COLORS.text,
+    fontSize: 16,
+    fontWeight: '700',
+    marginBottom: 4,
   },
   pathMeta: {
-    color: '#94a3b8',
+    color: COLORS.textSecondary,
     fontSize: 12,
-    marginTop: 4,
   },
   badge: {
-    borderRadius: 999,
-    paddingHorizontal: 10,
-    paddingVertical: 6,
+    borderRadius: 10,
+    paddingHorizontal: 12,
+    paddingVertical: 8,
   },
   badgeText: {
-    color: '#0f172a',
-    fontSize: 11,
+    color: COLORS.bg,
+    fontSize: 12,
     fontWeight: '700',
   },
   progressWrap: {
-    height: 10,
-    backgroundColor: '#1e293b',
+    height: 8,
+    backgroundColor: COLORS.bgTertiary,
     borderRadius: 999,
     overflow: 'hidden',
     marginBottom: 12,
@@ -607,51 +664,53 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   progressText: {
-    color: '#cbd5e1',
-    fontSize: 13,
+    color: COLORS.textSecondary,
+    fontSize: 12,
   },
   continueButton: {
     borderRadius: 10,
-    paddingVertical: 10,
-    paddingHorizontal: 16,
+    paddingVertical: 8,
+    paddingHorizontal: 14,
   },
   continueButtonText: {
-    color: '#0f172a',
+    color: COLORS.bg,
     fontWeight: '700',
+    fontSize: 12,
   },
   topBar: {
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-    marginBottom: 16,
+    marginBottom: 20,
   },
   linkText: {
-    color: '#facc15',
+    color: COLORS.primaryLight,
     fontWeight: '600',
+    fontSize: 14,
   },
   lessonCard: {
-    backgroundColor: '#111827',
-    borderRadius: 16,
-    padding: 16,
-    marginBottom: 14,
+    backgroundColor: COLORS.bgSecondary,
+    borderRadius: 14,
+    padding: 14,
+    marginBottom: 12,
     borderWidth: 1,
-    borderColor: '#334155',
+    borderColor: COLORS.border,
   },
   lessonLanguage: {
-    color: '#facc15',
+    color: COLORS.primaryLight,
     fontSize: 12,
     marginBottom: 6,
     fontWeight: '700',
   },
   lessonTitle: {
-    color: '#f8fafc',
-    fontSize: 20,
+    color: COLORS.text,
+    fontSize: 18,
     fontWeight: '700',
-    marginBottom: 6,
+    marginBottom: 4,
   },
   lessonSummary: {
-    color: '#cbd5e1',
-    fontSize: 14,
+    color: COLORS.textSecondary,
+    fontSize: 13,
     marginBottom: 10,
   },
   lessonMetaRow: {
@@ -659,116 +718,143 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
   },
   lessonMeta: {
-    color: '#94a3b8',
+    color: COLORS.textSecondary,
     fontSize: 12,
   },
   lessonDetailCard: {
-    backgroundColor: '#111827',
-    borderRadius: 18,
+    backgroundColor: COLORS.bgSecondary,
+    borderRadius: 16,
     padding: 18,
     borderWidth: 1,
-    borderColor: '#334155',
+    borderColor: COLORS.border,
   },
   lessonLabel: {
-    color: '#facc15',
+    color: COLORS.primaryLight,
     fontSize: 12,
     marginBottom: 10,
     fontWeight: '700',
   },
   lessonDetailTitle: {
-    color: '#f8fafc',
+    color: COLORS.text,
     fontSize: 24,
-    fontWeight: '700',
+    fontWeight: '800',
     marginBottom: 10,
   },
   detailHeading: {
-    color: '#f8fafc',
-    fontSize: 16,
+    color: COLORS.text,
+    fontSize: 15,
     fontWeight: '700',
     marginBottom: 8,
-    marginTop: 16,
+    marginTop: 14,
   },
   detailText: {
-    color: '#cbd5e1',
+    color: COLORS.textSecondary,
     fontSize: 14,
     lineHeight: 20,
   },
   bullet: {
-    color: '#cbd5e1',
-    fontSize: 14,
+    color: COLORS.textSecondary,
+    fontSize: 13,
     marginBottom: 6,
   },
   codeBlock: {
     marginTop: 12,
-    backgroundColor: '#0b1220',
-    color: '#f8fafc',
-    borderRadius: 12,
+    backgroundColor: COLORS.bg,
+    color: COLORS.primaryLight,
+    borderRadius: 10,
     padding: 12,
-    fontSize: 13,
-    lineHeight: 20,
+    fontSize: 12,
+    lineHeight: 18,
+    fontFamily: 'Menlo',
   },
   quizCard: {
-    backgroundColor: '#111827',
-    borderRadius: 18,
+    backgroundColor: COLORS.bgSecondary,
+    borderRadius: 16,
     padding: 18,
     borderWidth: 1,
-    borderColor: '#334155',
+    borderColor: COLORS.border,
   },
   optionButton: {
-    backgroundColor: '#1e293b',
+    backgroundColor: COLORS.bgTertiary,
     borderRadius: 12,
-    padding: 12,
+    padding: 14,
     marginTop: 12,
     borderWidth: 1,
-    borderColor: '#334155',
+    borderColor: COLORS.border,
   },
   optionButtonSelected: {
-    borderColor: '#facc15',
-    backgroundColor: '#3f3f46',
+    borderColor: COLORS.primary,
+    backgroundColor: COLORS.bgSecondary,
   },
   optionText: {
-    color: '#f8fafc',
+    color: COLORS.text,
     fontSize: 14,
   },
   practiceCard: {
-    backgroundColor: '#111827',
-    borderRadius: 18,
+    backgroundColor: COLORS.bgSecondary,
+    borderRadius: 16,
     padding: 18,
     borderWidth: 1,
-    borderColor: '#334155',
+    borderColor: COLORS.border,
+  },
+  codeEditorLabel: {
+    color: COLORS.text,
+    fontSize: 14,
+    fontWeight: '700',
+    marginTop: 16,
+    marginBottom: 8,
   },
   codeEditor: {
-    marginTop: 18,
     minHeight: 160,
-    backgroundColor: '#0b1220',
-    borderRadius: 12,
+    backgroundColor: COLORS.bg,
+    borderRadius: 10,
     borderWidth: 1,
-    borderColor: '#334155',
-    color: '#f8fafc',
+    borderColor: COLORS.border,
+    color: COLORS.text,
     padding: 12,
-    fontSize: 14,
+    fontSize: 13,
+    fontFamily: 'Menlo',
   },
   profileCard: {
-    backgroundColor: '#111827',
+    backgroundColor: COLORS.bgSecondary,
     borderRadius: 18,
     padding: 20,
     borderWidth: 1,
-    borderColor: '#334155',
+    borderColor: COLORS.border,
   },
   profileName: {
-    color: '#f8fafc',
+    color: COLORS.text,
     fontSize: 28,
-    fontWeight: '700',
+    fontWeight: '800',
+    marginBottom: 4,
   },
   profileEmail: {
-    color: '#94a3b8',
+    color: COLORS.textSecondary,
     fontSize: 14,
-    marginTop: 8,
-    marginBottom: 16,
+    marginBottom: 20,
   },
-  profileStat: {
-    color: '#f8fafc',
-    fontSize: 16,
-    marginBottom: 8,
+  statsGrid: {
+    flexDirection: 'row',
+    gap: 12,
+  },
+  statBox: {
+    flex: 1,
+    backgroundColor: COLORS.bgTertiary,
+    borderRadius: 12,
+    padding: 12,
+    borderWidth: 1,
+    borderColor: COLORS.border,
+    alignItems: 'center',
+  },
+  statLabel: {
+    color: COLORS.textSecondary,
+    fontSize: 11,
+    marginBottom: 4,
+    fontWeight: '600',
+  },
+  statValue: {
+    color: COLORS.primaryLight,
+    fontSize: 20,
+    fontWeight: '800',
   },
 });

@@ -1,206 +1,102 @@
-export const defaultUser = {
-  id: 'u-100',
-  name: 'Alex',
-  email: 'alex@example.com',
-  streak: 7,
-  level: 'Beginner',
-  xp: 260,
-};
+# Code Learn Mobile
 
-export const learningPaths = [
-  {
-    id: 'javascript',
-    title: 'JavaScript Essentials',
-    description: 'Learn variables, functions, arrays, objects, conditionals, and loops.',
-    language: 'JavaScript',
-    level: 'Absolute beginner',
-    lessonsTotal: 6,
-    progress: 46,
-    accent: '#F7C948',
-  },
-  {
-    id: 'python',
-    title: 'Python Foundations',
-    description: 'Start with syntax, data types, logic, loops, and your first mini programs.',
-    language: 'Python',
-    level: 'Absolute beginner',
-    lessonsTotal: 6,
-    progress: 33,
-    accent: '#4F8EF7',
-  },
-];
+A mobile-first learning platform for JavaScript and Python from absolute zero.
 
-export const lessons = [
-  {
-    id: 'js-1',
-    language: 'JavaScript',
-    title: 'Variables and values',
-    difficulty: 'Beginner',
-    durationMinutes: 12,
-    summary: 'Understand strings, numbers, booleans, and how variables store values.',
-    objective: 'You will be able to declare variables and use them in basic expressions.',
-    steps: [
-      'Learn what variables are and how they store data.',
-      'Understand the difference between strings, numbers, and booleans.',
-      'Practice reading and updating values in code.',
-    ],
-    example: 'const name = "Alex";\nlet score = 10;\nconsole.log(name, score);',
-  },
-  {
-    id: 'js-2',
-    language: 'JavaScript',
-    title: 'Functions',
-    difficulty: 'Beginner',
-    durationMinutes: 15,
-    summary: 'Learn to write reusable blocks of code that accept inputs and return values.',
-    objective: 'You will create functions and call them with arguments.',
-    steps: [
-      'Understand what a function is.',
-      'Learn how to pass parameters into a function.',
-      'Return data from a function to reuse it elsewhere.',
-    ],
-    example: 'function greet(name) {\n  return "Hello, " + name;\n}\n\nconsole.log(greet("Alex"));',
-  },
-  {
-    id: 'js-3',
-    language: 'JavaScript',
-    title: 'Conditionals',
-    difficulty: 'Beginner',
-    durationMinutes: 14,
-    summary: 'Use if/else statements to make decisions in your code.',
-    objective: 'You will check conditions and respond differently depending on the result.',
-    steps: [
-      'Learn the if statement.',
-      'Explore else and else if logic.',
-      'Write code that reacts to data.',
-    ],
-    example: 'const age = 18;\nif (age >= 18) {\n  console.log("Adult");\n} else {\n  console.log("Minor");\n}',
-  },
-  {
-    id: 'py-1',
-    language: 'Python',
-    title: 'Printing and variables',
-    difficulty: 'Beginner',
-    durationMinutes: 10,
-    summary: 'Print text and store values in variables using Python syntax.',
-    objective: 'You will be able to print output and save information in a variable.',
-    steps: [
-      'Learn the print function.',
-      'Create variables with names and values.',
-      'Understand the role of assignment in Python.',
-    ],
-    example: 'name = "Alex"\nprint("Hello, " + name)',
-  },
-  {
-    id: 'py-2',
-    language: 'Python',
-    title: 'If statements',
-    difficulty: 'Beginner',
-    durationMinutes: 13,
-    summary: 'Use conditionals to control the flow of your program.',
-    objective: 'You will create simple decision-making logic in Python.',
-    steps: [
-      'Learn how to compare values.',
-      'Use if, elif, and else.',
-      'Respond to different inputs in your code.',
-    ],
-    example: 'age = 18\nif age >= 18:\n    print("Adult")\nelse:\n    print("Minor")',
-  },
-  {
-    id: 'py-3',
-    language: 'Python',
-    title: 'Loops',
-    difficulty: 'Beginner',
-    durationMinutes: 18,
-    summary: 'Repeat actions without writing the same lines multiple times.',
-    objective: 'You will use loops to repeat tasks and iterate through data.',
-    steps: [
-      'Learn the for loop.',
-      'Learn the while loop and when to use it.',
-      'Use loops to process lists or runs repeatedly.',
-    ],
-    example: 'for i in range(3):\n    print(i)',
-  },
-];
+## Tech stack
 
-export const starterChallenges = [
-  {
-    id: 'challenge-1',
-    title: 'Create a greeting function',
-    language: 'JavaScript',
-    difficulty: 'Easy',
-    prompt: 'Write a function that returns a greeting using a name passed as an argument.',
-  },
-  {
-    id: 'challenge-2',
-    title: 'Check a user age',
-    language: 'Python',
-    difficulty: 'Easy',
-    prompt: 'Write a function that tells the user if they are old enough to access a service.',
-  },
-  {
-    id: 'challenge-3',
-    title: 'Loop over a list',
-    language: 'Python',
-    difficulty: 'Easy',
-    prompt: 'Print each item in a list using a loop.',
-  },
-];
+- Mobile app: React Native + Expo
+- Backend: Node.js + Express
+- Database: PostgreSQL (schema included)
+- Auth: ready to add JWT / Supabase later
 
-export const practiceChallenges = [
-  {
-    id: 'practice-js-1',
-    language: 'JavaScript',
-    title: 'Greeting function',
-    prompt: 'Write a function called greet(name) that returns a greeting, for example: "Hello, Alex".',
-    starterCode: 'function greet(name) {\n  // write your code here\n}',
-    expectedKeywords: ['function', 'return', 'hello', 'name'],
-  },
-  {
-    id: 'practice-py-1',
-    language: 'Python',
-    title: 'Age check',
-    prompt: 'Create a function can_access(age) that returns True if age is 18 or more.',
-    starterCode: 'def can_access(age):\n    # write your code here\n',
-    expectedKeywords: ['def', 'return', 'age', '18'],
-  },
-];
+## Project structure
 
-export const quizBank = [
-  {
-    id: 'q-js-1',
-    lessonId: 'js-1',
-    question: 'Which keyword is used to declare a variable that should not be reassigned?',
-    options: ['var', 'let', 'const', 'function'],
-    answer: 'const',
-  },
-  {
-    id: 'q-js-2',
-    lessonId: 'js-2',
-    question: 'What does a function return?',
-    options: ['Only numbers', 'Only strings', 'A value when used with return', 'Nothing at all'],
-    answer: 'A value when used with return',
-  },
-  {
-    id: 'q-py-1',
-    lessonId: 'py-1',
-    question: 'Which function prints text to the console in Python?',
-    options: ['echo()', 'print()', 'output()', 'log()'],
-    answer: 'print()',
-  },
-  {
-    id: 'q-py-2',
-    lessonId: 'py-2',
-    question: 'What is the purpose of an if statement?',
-    options: ['To repeat code', 'To make a decision', 'To store data', 'To import modules'],
-    answer: 'To make a decision',
-  },
-];
+- `apps/mobile` — Expo app
+- `apps/server` — Express API
+- `database/schema.sql` — SQL schema for learning paths, lessons, users, and progress
 
-export const userProgress = {
-  totalLessonsCompleted: 2,
-  streak: 7,
-  xp: 260,
-  nextGoal: 'Finish the JavaScript basics path',
-  completedLessonIds: ['js-1', 'py-1'],
-};
+## Getting started
+
+### Prerequisites
+
+- Node.js 18+ installed
+- npm or yarn
+- Expo CLI (optional, for advanced testing)
+
+### 1) Install dependencies
+
+```bash
+npm install
+```
+
+### 2) Start the backend API
+
+In one terminal:
+
+```bash
+npm run server
+```
+
+The API will run on `http://localhost:4000`.
+
+### 3) Start the mobile app
+
+In another terminal:
+
+```bash
+npm run mobile
+```
+
+Expo will launch and give you options to:
+- Open in web browser (press `w`)
+- Open on Android emulator (press `a`)
+- Open on iOS simulator (press `i`)
+- Scan with Expo Go app on your phone (scan the QR code)
+
+### 4) Test the app
+
+- **Login**: Use any email/password combo (e.g., `alex@example.com` / `password123`)
+- **Explore**: Browse lessons, take quizzes, and try the practice lab
+
+## Running both together
+
+```bash
+npm run dev
+```
+
+This starts the API and mobile app in parallel.
+
+## API Endpoints
+
+- `GET /api/health` — Check API status
+- `POST /api/auth/login` — User login
+- `POST /api/auth/signup` — User registration
+- `GET /api/lessons` — All lessons
+- `GET /api/lessons/:language` — Lessons by language
+- `GET /api/quiz/:lessonId` — Quiz for a lesson
+- `GET /api/practice` — Practice challenges
+- `GET /api/progress` — User progress
+
+## Features
+
+✅ User authentication  
+✅ Lesson catalog (JavaScript & Python)  
+✅ Interactive quizzes  
+✅ Practice coding lab  
+✅ Progress tracking  
+✅ Streak counter  
+✅ Dark theme UI  
+
+## Next Steps
+
+- [ ] Connect to real database (PostgreSQL)
+- [ ] Add code execution sandbox
+- [ ] Deploy backend to Vercel/Railway
+- [ ] Build for iOS/Android with EAS
+- [ ] Add more lessons and content
+- [ ] User progress persistence
+- [ ] Social features (leaderboards, sharing)
+
+## Notes
+
+This is an MVP. The app uses mock data for now. To use real data, connect it to a PostgreSQL database and update the API endpoints.
