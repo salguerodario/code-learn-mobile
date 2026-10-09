@@ -147,6 +147,25 @@ export const starterChallenges = [
   },
 ];
 
+export const practiceChallenges = [
+  {
+    id: 'practice-js-1',
+    language: 'JavaScript',
+    title: 'Greeting function',
+    prompt: 'Write a function called greet(name) that returns a greeting, for example: "Hello, Alex".',
+    starterCode: 'function greet(name) {\n  // write your code here\n}',
+    expectedKeywords: ['function', 'return', 'hello', 'name'],
+  },
+  {
+    id: 'practice-py-1',
+    language: 'Python',
+    title: 'Age check',
+    prompt: 'Create a function can_access(age) that returns True if age is 18 or more.',
+    starterCode: 'def can_access(age):\n    # write your code here\n',
+    expectedKeywords: ['def', 'return', 'age', '18'],
+  },
+];
+
 export const quizBank = [
   {
     id: 'q-js-1',

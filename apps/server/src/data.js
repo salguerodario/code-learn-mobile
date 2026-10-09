@@ -7,6 +7,7 @@ import {
   quizBank,
   userProgress,
   defaultUser,
+  practiceChallenges,
 } from './data.js';
 
 const app = express();
@@ -83,6 +84,10 @@ app.get('/api/lessons/:lessonId/detail', (req, res) => {
 
 app.get('/api/challenges', (_req, res) => {
   res.json(starterChallenges);
+});
+
+app.get('/api/practice', (_req, res) => {
+  res.json(practiceChallenges);
 });
 
 app.get('/api/quiz/:lessonId', (req, res) => {

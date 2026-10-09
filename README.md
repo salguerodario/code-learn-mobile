@@ -18,7 +18,6 @@ const learningPaths = [
     lessons: 6,
     progress: 46,
     accent: '#F7C948',
-    color: '#0f172a',
   },
   {
     id: 'python',
@@ -27,7 +26,6 @@ const learningPaths = [
     lessons: 6,
     progress: 33,
     accent: '#4F8EF7',
-    color: '#0f172a',
   },
 ];
 
@@ -103,20 +101,44 @@ const quizBank = [
   },
 ];
 
+const practiceChallenges = [
+  {
+    id: 'practice-js-1',
+    language: 'JavaScript',
+    title: 'Greeting function',
+    prompt: 'Write a function called greet(name) that returns a greeting, such as "Hello, Alex".',
+    starterCode: 'function greet(name) {\n  // write your code here\n}',
+  },
+  {
+    id: 'practice-py-1',
+    language: 'Python',
+    title: 'Age check',
+    prompt: 'Create a function can_access(age) that returns True if age is 18 or more.',
+    starterCode: 'def can_access(age):\n    # write your code here\n',
+  },
+];
+
 const questionMap = new Map(quizBank.map((item) => [item.lessonId, item]));
 
 export default function App() {
-  const [screen, setScreen] = useState<'auth' | 'home' | 'lessons' | 'lesson' | 'quiz' | 'profile'>('auth');
+  const [screen, setScreen] = useState<'auth' | 'home' | 'lessons' | 'lesson' | 'quiz' | 'practice' | 'profile'>('auth');
   const [selectedLessonId, setSelectedLessonId] = useState<string>('js-1');
+  const [selectedPracticeId, setSelectedPracticeId] = useState<string>('practice-js-1');
   const [email, setEmail] = useState('alex@example.com');
   const [password, setPassword] = useState('password123');
   const [userName, setUserName] = useState('Alex');
   const [quizAnswer, setQuizAnswer] = useState('');
+  const [practiceCode, setPracticeCode] = useState(practiceChallenges[0].starterCode);
   const [score, setScore] = useState(0);
 
   const selectedLesson = useMemo(
     () => lessonCatalog.find((lesson) => lesson.id === selectedLessonId) ?? lessonCatalog[0],
     [selectedLessonId],
+  );
+
+  const selectedPractice = useMemo(
+    () => practiceChallenges.find((challenge) => challenge.id === selectedPracticeId) ?? practiceChallenges[0],
+    [selectedPracticeId],
   );
 
   const currentQuiz = questionMap.get(selectedLessonId) ?? quizBank[0];
@@ -145,6 +167,22 @@ export default function App() {
         : `The correct answer is: ${currentQuiz.answer}`,
     );
     setQuizAnswer('');
+  };
+
+  const handlePracticeRun = () => {
+    const code = practiceCode.toLowerCase();
+    const valid =
+      code.includes('function') || code.includes('def')
+      ? (code.includes('return') && (code.includes('hello') || code.includes('name') || code.includes('age') || code.includes('18')))
+      : false;
+
+    if (valid) {
+      Alert.alert('Challenge passed!', 'Great work — your function follows the right pattern.');
+      setScore((prev) => prev + 15);
+      return;
+    }
+
+    Alert.alert('Almost there', 'Keep working on the function logic and return value.');
   };
 
   const renderAuthScreen = () => (
@@ -206,6 +244,9 @@ export default function App() {
         </Pressable>
         <Pressable style={styles.actionButton} onPress={() => setScreen('quiz')}>
           <Text style={styles.actionText}>Quiz</Text>
+        </Pressable>
+        <Pressable style={styles.actionButton} onPress={() => setScreen('practice')}>
+          <Text style={styles.actionText}>Practice</Text>
         </Pressable>
       </View>
 
@@ -327,6 +368,34 @@ export default function App() {
     </ScrollView>
   );
 
+  const renderPracticeScreen = () => (
+    <ScrollView contentContainerStyle={styles.container}>
+      <View style={styles.topBar}>
+        <Pressable onPress={() => setScreen('home')}>
+          <Text style={styles.linkText}>Back</Text>
+        </Pressable>
+      </View>
+
+      <View style={styles.practiceCard}>
+        <Text style={styles.lessonLabel}>{selectedPractice.language}</Text>
+        <Text style={styles.lessonDetailTitle}>{selectedPractice.title}</Text>
+        <Text style={styles.detailText}>{selectedPractice.prompt}</Text>
+
+        <TextInput
+          style={styles.codeEditor}
+          multiline
+          value={practiceCode}
+          onChangeText={setPracticeCode}
+          textAlignVertical="top"
+        />
+
+        <Pressable style={styles.primaryButton} onPress={handlePracticeRun}>
+          <Text style={styles.primaryButtonText}>Run code</Text>
+        </Pressable>
+      </View>
+    </ScrollView>
+  );
+
   const renderProfileScreen = () => (
     <ScrollView contentContainerStyle={styles.container}>
       <View style={styles.topBar}>
@@ -350,6 +419,7 @@ export default function App() {
     lessons: renderLessonsScreen,
     lesson: renderLessonScreen,
     quiz: renderQuizScreen,
+    practice: renderPracticeScreen,
     profile: renderProfileScreen,
   };
 
@@ -477,7 +547,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#1e293b',
     borderRadius: 12,
     paddingVertical: 14,
-    paddingHorizontal: 10,
+    paddingHorizontal: 8,
     borderWidth: 1,
     borderColor: '#334155',
     marginRight: 8,
@@ -658,6 +728,24 @@ const styles = StyleSheet.create({
   },
   optionText: {
     color: '#f8fafc',
+    fontSize: 14,
+  },
+  practiceCard: {
+    backgroundColor: '#111827',
+    borderRadius: 18,
+    padding: 18,
+    borderWidth: 1,
+    borderColor: '#334155',
+  },
+  codeEditor: {
+    marginTop: 18,
+    minHeight: 160,
+    backgroundColor: '#0b1220',
+    borderRadius: 12,
+    borderWidth: 1,
+    borderColor: '#334155',
+    color: '#f8fafc',
+    padding: 12,
     fontSize: 14,
   },
   profileCard: {
