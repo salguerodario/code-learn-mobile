@@ -1,0 +1,15 @@
+{
+  "name": "code-learn-mobile",
+  "private": true,
+  "workspaces": [
+    "apps/*"
+  ],
+  "scripts": {
+    "mobile": "npm --workspace apps/mobile start",
+    "server": "npm --workspace apps/server dev",
+    "dev": "concurrently \"npm run server\" \"npm run mobile\""
+  },
+  "devDependencies": {
+    "concurrently": "^9.0.1"
+  }
+}
